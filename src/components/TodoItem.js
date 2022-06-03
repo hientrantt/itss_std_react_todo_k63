@@ -7,7 +7,7 @@
 function TodoItem({item, setItemChecked}) {
   return (
     <label className="panel-block"  
-      style = {{color: item.done ? "green" : "black"}} 
+      style = {{color: item.done ? "grey" : "black"}} 
     >
             <input type="checkbox" checked={item.done ? true : false}
               onChange={()=>{setItemChecked(item)}}

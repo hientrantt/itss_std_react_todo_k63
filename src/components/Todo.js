@@ -26,7 +26,22 @@ function Todo() {
     { key: getKey(), text: '明日の準備をする', done: false },
     /* テストコード 終了 */
   ]);
-
+  
+  const statusList = ["全て", "未完了", "完了済み"];
+  const [status, setStatus] = React.useState(statusList[0]);
+  const itemsTmp = items.filter(item => {
+        switch(status){
+          case statusList[0]:
+            return true;
+          case statusList[1]:
+            if(item.done===false) return true;
+            else return false;
+          case statusList[2]:
+            if(item.done===true) return true;
+            else return false;
+        }
+      })
+  
   const setItemChecked = (item) => {
     let newItems = items.slice();
     const itemCheckedIndex = newItems.findIndex((currentItem)=>currentItem.key===item.key);
@@ -34,10 +49,15 @@ function Todo() {
     putItems(newItems);
   }
 
-  const pushNewItem = (newItem) => {
-    let newItems = items.slice();
+  const pushNewItem = (inputValue) => {
+    const newItem = { key: getKey(), text: inputValue, done: false};
+    const newItems = items.slice();
     newItems.push(newItem);
     putItems(newItems);
+  }
+
+  const filterByStatus = (status) => {
+    setStatus(status);
   }
   
   return (
@@ -46,11 +66,12 @@ function Todo() {
         ITSS ToDoアプリ
       </div>
       <Input pushNewItem = {pushNewItem}/>
-      {items.map(item => (
+      <Filter currentStatus={status} filterByStatus={filterByStatus}/>
+      {itemsTmp.map(item => (
         <TodoItem key={item.key} item={item} setItemChecked = {setItemChecked} />      
       ))}
       <div className="panel-block">
-        {items.length} items
+        {itemsTmp.length} items
       </div>
     </div>
   );
