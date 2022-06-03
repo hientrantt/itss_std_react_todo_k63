@@ -13,7 +13,6 @@ function TodoItem({item, setItemChecked}) {
               onChange={()=>{setItemChecked(item)}}
             />
             {item.text}
-            {item.done&&" true"}
     </label>
   );
 }
