@@ -4,12 +4,17 @@
 　・チェックボックスにチェックが入っているか管理する
 　・チェックボックスにチェックが入っているかアイテムをグレーアウトする
 */
-function TodoItem({item}) {
+function TodoItem({item, setItemChecked}) {
   return (
-    <label className="panel-block">
-            <input type="checkbox" />
+    <label className="panel-block"  
+      style = {{color: item.done ? "green" : "black"}} 
+    >
+            <input type="checkbox" checked={item.done ? true : false}
+              onChange={()=>{setItemChecked(item)}}
+            />
             {item.text}
-        </label>
+            {item.done&&" true"}
+    </label>
   );
 }
 
