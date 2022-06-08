@@ -4,8 +4,9 @@
 　・チェックボックスにチェックが入っているか管理する
 　・チェックボックスにチェックが入っているかアイテムをグレーアウトする
 */
-function TodoItem({item, setItemChecked}) {
+function TodoItem({item, setItemChecked, deleteItem}) {
   return (
+    // <div className="panel-block is-justify-content-space-between" >
     <label className="panel-block"  
       style = {{color: item.done ? "grey" : "black"}} 
     >
@@ -14,6 +15,8 @@ function TodoItem({item, setItemChecked}) {
             />
             {item.text}
     </label>
+    // <button className="text-end">X</button>
+      // </div>
   );
 }
 

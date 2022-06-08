@@ -12,3 +12,10 @@
 .filter:hover{
   cursor: pointer;
 }
+.filter.active{
+  color: black;
+  border-bottom: 1px solid;
+}
+.text-end{
+  text-aligt:right
+}

@@ -9,9 +9,8 @@ function Filter({currentStatus, filterByStatus}) {
   return (
     <div className="panel-tabs">
       { statusList.map((status, index)=>
-          <span className="filter" 
+          <span className={status===currentStatus ? "active filter":"filter"} 
             key={index}
-            style={{color: status===currentStatus?"black":"blue"}}
             onClick={()=>{
               console.log("change");
               filterByStatus(status)}}  
