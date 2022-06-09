@@ -1,22 +1,25 @@
 /* 
   【TodoItemコンポーネント】
-　・Todoアイテムを表示する
-　・チェックボックスにチェックが入っているか管理する
-　・チェックボックスにチェックが入っているかアイテムをグレーアウトする
+ ・Todoアイテムを表示する
+ ・チェックボックスにチェックが入っているか管理する
+ ・チェックボックスにチェックが入っているかアイテムをグレーアウトする
 */
-function TodoItem({item, setItemChecked, deleteItem}) {
+function TodoItem({ item, setItemChecked, deleteItem }) {
   return (
-    // <div className="panel-block is-justify-content-space-between" >
-    <label className="panel-block"  
-      style = {{color: item.done ? "grey" : "black"}} 
+    <label className="panel-block" style={{ color: item.done ? "grey" : "black" }}
     >
-            <input type="checkbox" checked={item.done ? true : false}
-              onChange={()=>{setItemChecked(item)}}
-            />
-            {item.text}
+      <span style={{color: "red", marginRight: "20px", padding: "5px 10px",border: "1px solid black"}}
+        onClick={()=>{
+          deleteItem(item)
+        }}
+      >X</span>
+      <input type="checkbox" checked={item.done ? true : false}
+        onChange={() => {
+          setItemChecked(item);
+        }}
+      />
+      {item.text}
     </label>
-    // <button className="text-end">X</button>
-      // </div>
   );
 }
 

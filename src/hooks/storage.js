@@ -1,33 +1,32 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
-/* 
-  【Storageフック】
-　・TodoをlocalStorageを使って保存する
-　・以下機能をサポートする
-　  - localstrageに保存されているすべてのTodoの読み出し機能
-　  - Todoをlocalstrageに保存する
-　  - localstrageにあるTodoを削除する
-*/
-
-const STORAGE_KEY = 'itss-todo';
-
-function useStorage() {
-  const [items, setItems] = useState([]);
-　
-　/* 副作用を使う */
-  useEffect(() => {
-    
-  }, []);
-
-  const putItems = items => {
-    
+// Hook
+function useStorage(key, initialValue) {
+  const [storedValue, setStoredValue] = useState(() => {
+    if (typeof window === "undefined") {
+      return initialValue;
+    }
+    try {
+      const item = window.localStorage.getItem(key);
+      return item ? JSON.parse(item) : initialValue;
+    } catch (error) {
+      console.log(error);
+      return initialValue;
+    }
+  });
+  const setValue = (value) => {
+    try {
+      const valueToStore =
+        value instanceof Function ? value(storedValue) : value;
+      setStoredValue(valueToStore);
+      if (typeof window !== "undefined") {
+        window.localStorage.setItem(key, JSON.stringify(valueToStore));
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
-
-  const clearItems = () => {
-    
-  };
-
-  return [items, putItems, clearItems];
+  return [storedValue, setValue];
 }
 
 export default useStorage;

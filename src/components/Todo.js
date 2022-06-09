@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 /* 
   【Todoのデータ構成】
 　・key：Todoを特定するID（String）
@@ -19,13 +18,7 @@ import useStorage from '../hooks/storage';
 import {getKey} from "../lib/util";
 
 function Todo() {
-  const [items, putItems] = React.useState([
-      /* テストコード 開始 */
-    { key: getKey(), text: '日本語の宿題', done: true },
-    { key: getKey(), text: 'reactを勉強する', done: false },
-    { key: getKey(), text: '明日の準備をする', done: false },
-    /* テストコード 終了 */
-  ]);
+  const [items, putItems] = useStorage("items", []);
   
   const statusList = ["全て", "未完了", "完了済み"];
   const [status, setStatus] = React.useState(statusList[0]);
@@ -59,6 +52,11 @@ function Todo() {
   const filterByStatus = (status) => {
     setStatus(status);
   }
+
+  const deleteItem = (item)=>{
+    const newItems = items.filter((currentItem)=>currentItem.key!==item.key);
+    putItems(newItems);
+  }
   
   return (
     <div className="panel">
@@ -68,7 +66,7 @@ function Todo() {
       <Input pushNewItem = {pushNewItem}/>
       <Filter currentStatus={status} filterByStatus={filterByStatus}/>
       {itemsTmp.map(item => (
-        <TodoItem key={item.key} item={item} setItemChecked = {setItemChecked} />      
+        <TodoItem key={item.key} item={item} setItemChecked = {setItemChecked} deleteItem={deleteItem} />      
       ))}
       <div className="panel-block">
         {itemsTmp.length} items
